@@ -8,6 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'contactAdd.dart';
 import 'models/contactModel.dart';
 import 'models/userModel.dart';
 
@@ -59,36 +60,6 @@ class _ContactScreenState extends State<ContactScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
-            const Text('Add a new Contact'),
-            TextFormField(
-              decoration: const InputDecoration(
-                hintText: "Enter Name",
-              ),
-              keyboardType: TextInputType.name,
-              onChanged: (val) {
-                setState(() {
-                  name = val;
-                });
-              },
-            ),
-            TextFormField(
-              decoration: const InputDecoration(
-                hintText: "Enter Number",
-              ),
-              keyboardType: TextInputType.number,
-              onChanged: (val) {
-                setState(() {
-                  number = val;
-                });
-              },
-            ),
-            ElevatedButton(
-                style: ElevatedButton.styleFrom(primary: Colors.blue),
-                onPressed: () async {
-                  _contactService.saveContact(name, number);
-                  //Navigator.pop(context);
-                },
-                child: const Text('SAVE')),
             const SizedBox(
               height: 20,
             ),
@@ -109,10 +80,20 @@ class _ContactScreenState extends State<ContactScreen> {
       ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        heroTag: 'uniqueTag',
         onPressed: () async {
-          _contactService.saveContact(name, number);
-        }, label: const Text('Save Contact'),
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddContact()
+            ),
+          );
+        }, label: Row(
+          children: [
+            Icon(Icons.add_ic_call_rounded),
+            SizedBox(width: 8,),
+            const Text('Add Contact'),
+          ],
+        ),
       ),
     );
   }
@@ -126,13 +107,32 @@ class SideDrawer extends StatelessWidget {
     return Drawer(
       child: Column(
         children: <Widget>[
-          const DrawerHeader(
-            child: Text('LOGO'),
+           DrawerHeader(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text('Contact',style: TextStyle(fontSize: 20),),
+                ),
+                Text('Application',style: TextStyle(fontSize: 20),),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Icon(Icons.book_sharp,size: 20,),
+                ),
+              ],
+            ),
           ),
           ListTile(
             leading: const Icon(Icons.home_outlined),
             title: const Text('Home'),
-            onTap: () => {Navigator.of(context).pop()},
+            onTap: () => {Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Home(
+                ),
+              ),
+            )},
           ),
           ListTile(
             leading: const Icon(Icons.account_circle_outlined),

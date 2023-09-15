@@ -22,57 +22,34 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade400,
       appBar: AppBar(
         automaticallyImplyLeading: true,
         title: const Center(child: Text('Profile'),),
       ),
       drawer: const SideDrawer(),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text("Profile"),
-            CircleAvatar(
-              radius: 40,
-              backgroundImage: NetworkImage(user.photoURL!),
-            ),
-            Text('Name : ' + user.displayName!),
-            Text('Email : ' + user.email!),
-            const SizedBox(
-              height: 100,
-            ),
-          ],
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(height: 50,),
+              CircleAvatar(
+                radius: 60,
+                backgroundImage: NetworkImage(user.photoURL!),
+              ),
+              SizedBox(height: 10,),
+              Text('Name : ' + user.displayName!),
+              SizedBox(height: 20,),
+              Text('Email : ' + user.email!),
+              const SizedBox(
+                height: 100,
+              ),
+            ],
+          ),
         ),
       ),
-      // body: StreamBuilder<UserModel?>(
-      //   stream: UserService().getUserInfo(_user.uid),
-      //   builder: (context, snapshot) {
-      //     if (snapshot.hasData) {
-      //       if (snapshot.data != null) {
-      //         UserModel user = snapshot.data!;
-      //         return Column(
-      //           children: [
-      //             CircleAvatar(
-      //               radius: 40,
-      //               backgroundImage: NetworkImage(_user.photoURL!),
-      //             ),
-      //             const SizedBox(height: 10,),
-      //             Text('${user.name}'),
-      //             Text('${user.age}'),
-      //             const SizedBox(height: 10,),
-      //             ElevatedButton(
-      //               onPressed: () => Navigator.push(context,
-      //                   MaterialPageRoute(builder: (context) => EditProfile())),
-      //               child: Text('Edit Profile'),
-      //               style: ElevatedButton.styleFrom(backgroundColor: Colors.brown),
-      //             ),
-      //           ],
-      //         );
-      //       }
-      //     }
-      //     return loadingView();
-      //   },
-      // ),
     );
   }
 
